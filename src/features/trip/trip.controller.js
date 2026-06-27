@@ -55,7 +55,10 @@ export const generateTrip = asyncHandler(async (req, res) => {
   let data = JSON.parse(aiData);
 
   // 3. Fetch & Add Image with 'Unsplash'
-  data.quickSummary.image = await fetchImage(data.quickSummary.destination);
+  const DEFAULT_TRAVEL_IMAGE =
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828";
+  data.quickSummary.image =
+    (await fetchImage(data.quickSummary.destination)) || DEFAULT_TRAVEL_IMAGE;
 
   successResponse(res, 200, "Api worked Successfully", {
     data,
@@ -94,8 +97,11 @@ export const generateAiRecommendedTrip = asyncHandler(async (req, res) => {
   }
 
   // 4. Fetch & Add Images with 'Unsplash'
+  const DEFAULT_TRAVEL_IMAGE =
+    "https://images.unsplash.com/photo-1488646953014-85cb44e25828";
   for (let trip of trips) {
-    trip.quickSummary.image = await fetchImage(trip.quickSummary.destination);
+    trip.quickSummary.image =
+      (await fetchImage(trip.quickSummary.destination)) || DEFAULT_TRAVEL_IMAGE;
   }
 
   successResponse(res, 200, "Recommended trips fetched", { trips });
