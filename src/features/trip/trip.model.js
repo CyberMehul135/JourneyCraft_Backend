@@ -55,6 +55,10 @@ const tripSchema = new mongoose.Schema(
       endDate: String,
     },
     itinerary: [daySchema],
+    isFavourite: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

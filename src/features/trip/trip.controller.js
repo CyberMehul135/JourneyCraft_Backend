@@ -229,3 +229,22 @@ export const getTripStats = asyncHandler(async (req, res) => {
     aiRequestsLeft: "∞",
   });
 });
+
+export const toggleFavouriteTrip = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  // 1. Find Document(Trip)
+  const trip = await Trip.findById(id);
+  if (!trip) {
+    throw new ApiError(404, "Trip not found");
+  }
+
+  // 2. Update Document(Trip)
+  const updatedTrip = await Trip.findByIdAndUpdate(
+    id,
+    { isFavourite: !trip.isFavourite },
+    { new: true },
+  );
+
+  successResponse(res, 200, "Trip updated successfully", { updatedTrip });
+});

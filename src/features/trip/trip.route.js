@@ -8,6 +8,7 @@ import {
   deleteTrip,
   getTripStats,
   generateAiRecommendedTrip,
+  toggleFavouriteTrip,
 } from "./trip.controller.js";
 
 const router = express.Router();
@@ -20,5 +21,6 @@ router.get("/", authMiddleware, getTrips);
 router.get("/stats", authMiddleware, getTripStats);
 router.get("/:id", authMiddleware, getTrip);
 router.delete("/:id", authMiddleware, deleteTrip);
+router.patch("/:id/favourite", authMiddleware, toggleFavouriteTrip);
 
 export default router;
